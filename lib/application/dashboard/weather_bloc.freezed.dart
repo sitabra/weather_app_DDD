@@ -19,6 +19,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadLastSavedCity,
+    required TResult Function() authCheck,
     required TResult Function(String cityNameStr) cityNameChanged,
     required TResult Function() searchOnButtonPress,
   }) =>
@@ -26,6 +27,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
   }) =>
@@ -33,6 +35,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
     required TResult orElse(),
@@ -41,6 +44,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadLastSavedCity value) loadLastSavedCity,
+    required TResult Function(_AuthCheck value) authCheck,
     required TResult Function(_CityNameChanged value) cityNameChanged,
     required TResult Function(_SearchOnCLick value) searchOnButtonPress,
   }) =>
@@ -48,6 +52,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
   }) =>
@@ -55,6 +60,7 @@ mixin _$WeatherEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
     required TResult orElse(),
@@ -120,6 +126,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadLastSavedCity,
+    required TResult Function() authCheck,
     required TResult Function(String cityNameStr) cityNameChanged,
     required TResult Function() searchOnButtonPress,
   }) {
@@ -130,6 +137,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
   }) {
@@ -140,6 +148,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
     required TResult orElse(),
@@ -154,6 +163,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadLastSavedCity value) loadLastSavedCity,
+    required TResult Function(_AuthCheck value) authCheck,
     required TResult Function(_CityNameChanged value) cityNameChanged,
     required TResult Function(_SearchOnCLick value) searchOnButtonPress,
   }) {
@@ -164,6 +174,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
   }) {
@@ -174,6 +185,7 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
     required TResult orElse(),
@@ -187,6 +199,122 @@ class _$_LoadLastSavedCity implements _LoadLastSavedCity {
 
 abstract class _LoadLastSavedCity implements WeatherEvent {
   const factory _LoadLastSavedCity() = _$_LoadLastSavedCity;
+}
+
+/// @nodoc
+abstract class _$$_AuthCheckCopyWith<$Res> {
+  factory _$$_AuthCheckCopyWith(
+          _$_AuthCheck value, $Res Function(_$_AuthCheck) then) =
+      __$$_AuthCheckCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_AuthCheckCopyWithImpl<$Res> extends _$WeatherEventCopyWithImpl<$Res>
+    implements _$$_AuthCheckCopyWith<$Res> {
+  __$$_AuthCheckCopyWithImpl(
+      _$_AuthCheck _value, $Res Function(_$_AuthCheck) _then)
+      : super(_value, (v) => _then(v as _$_AuthCheck));
+
+  @override
+  _$_AuthCheck get _value => super._value as _$_AuthCheck;
+}
+
+/// @nodoc
+
+class _$_AuthCheck implements _AuthCheck {
+  const _$_AuthCheck();
+
+  @override
+  String toString() {
+    return 'WeatherEvent.authCheck()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_AuthCheck);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loadLastSavedCity,
+    required TResult Function() authCheck,
+    required TResult Function(String cityNameStr) cityNameChanged,
+    required TResult Function() searchOnButtonPress,
+  }) {
+    return authCheck();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
+    TResult Function(String cityNameStr)? cityNameChanged,
+    TResult Function()? searchOnButtonPress,
+  }) {
+    return authCheck?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
+    TResult Function(String cityNameStr)? cityNameChanged,
+    TResult Function()? searchOnButtonPress,
+    required TResult orElse(),
+  }) {
+    if (authCheck != null) {
+      return authCheck();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoadLastSavedCity value) loadLastSavedCity,
+    required TResult Function(_AuthCheck value) authCheck,
+    required TResult Function(_CityNameChanged value) cityNameChanged,
+    required TResult Function(_SearchOnCLick value) searchOnButtonPress,
+  }) {
+    return authCheck(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
+    TResult Function(_CityNameChanged value)? cityNameChanged,
+    TResult Function(_SearchOnCLick value)? searchOnButtonPress,
+  }) {
+    return authCheck?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
+    TResult Function(_CityNameChanged value)? cityNameChanged,
+    TResult Function(_SearchOnCLick value)? searchOnButtonPress,
+    required TResult orElse(),
+  }) {
+    if (authCheck != null) {
+      return authCheck(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AuthCheck implements WeatherEvent {
+  const factory _AuthCheck() = _$_AuthCheck;
 }
 
 /// @nodoc
@@ -256,6 +384,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadLastSavedCity,
+    required TResult Function() authCheck,
     required TResult Function(String cityNameStr) cityNameChanged,
     required TResult Function() searchOnButtonPress,
   }) {
@@ -266,6 +395,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
   }) {
@@ -276,6 +406,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
     required TResult orElse(),
@@ -290,6 +421,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadLastSavedCity value) loadLastSavedCity,
+    required TResult Function(_AuthCheck value) authCheck,
     required TResult Function(_CityNameChanged value) cityNameChanged,
     required TResult Function(_SearchOnCLick value) searchOnButtonPress,
   }) {
@@ -300,6 +432,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
   }) {
@@ -310,6 +443,7 @@ class _$_CityNameChanged implements _CityNameChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
     required TResult orElse(),
@@ -372,6 +506,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadLastSavedCity,
+    required TResult Function() authCheck,
     required TResult Function(String cityNameStr) cityNameChanged,
     required TResult Function() searchOnButtonPress,
   }) {
@@ -382,6 +517,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
   }) {
@@ -392,6 +528,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadLastSavedCity,
+    TResult Function()? authCheck,
     TResult Function(String cityNameStr)? cityNameChanged,
     TResult Function()? searchOnButtonPress,
     required TResult orElse(),
@@ -406,6 +543,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_LoadLastSavedCity value) loadLastSavedCity,
+    required TResult Function(_AuthCheck value) authCheck,
     required TResult Function(_CityNameChanged value) cityNameChanged,
     required TResult Function(_SearchOnCLick value) searchOnButtonPress,
   }) {
@@ -416,6 +554,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
   }) {
@@ -426,6 +565,7 @@ class _$_SearchOnCLick implements _SearchOnCLick {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoadLastSavedCity value)? loadLastSavedCity,
+    TResult Function(_AuthCheck value)? authCheck,
     TResult Function(_CityNameChanged value)? cityNameChanged,
     TResult Function(_SearchOnCLick value)? searchOnButtonPress,
     required TResult orElse(),

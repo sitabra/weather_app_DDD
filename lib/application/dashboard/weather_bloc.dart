@@ -62,6 +62,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       } else {
         emit(state.copyWith(showErrorMessages: true));
       }
-    });
+    }, authCheck: (_AuthCheck value) {  });
   }
 }

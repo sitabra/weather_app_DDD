@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_ddd_app/application/dashboard/weather_bloc.dart';
+import 'package:weather_ddd_app/domain/core/error/api_failures.dart';
 import 'package:weather_ddd_app/domain/dashboard/entities/fetched_weather.dart';
+import 'package:weather_ddd_app/presentation/core/snackbar.dart';
 
-var weatherData;
+var weatherData = {};
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -24,9 +26,25 @@ class _DashboardState extends State<Dashboard> {
         resizeToAvoidBottomInset: true,
         body: BlocConsumer<WeatherBloc, WeatherState>(
           listenWhen: (previous, current) =>
-              previous.authFailureOrSuccessOption !=
+          previous.authFailureOrSuccessOption !=
               current.authFailureOrSuccessOption,
-          listener: (context, state) {},
+          listener: (context, state) {
+            state.authFailureOrSuccessOption.fold(
+                  () {},
+                  (either) => either.fold(
+                    (failure) {
+                  final failureMessage = failure.failureMessage;
+                  showSnackBar(
+                    context: context,
+                    message: failureMessage,
+                  );
+                },
+                    (_) {
+                  context.read<WeatherBloc>().add(const WeatherEvent.authCheck());
+                },
+              ),
+            );
+          },
           builder: (context, state) {
             FetchedWeather data;
             state.authFailureOrSuccessOption.fold(() {
@@ -48,7 +66,7 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: Align(
                       alignment: Alignment.center,
@@ -62,18 +80,20 @@ class _DashboardState extends State<Dashboard> {
                   const SizedBox(
                     height: 40,
                   ),
-                  Text(
-                    weatherData != null
-                        ? "Weather at ${weatherData["name"]}"
-                        : "",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: weatherData != null
-                            ? Colors.grey.shade700
-                            : Colors.red,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1),
+                  Card(
+                    child: Text(
+                      weatherData.containsKey("name")
+                          ? "Weather at ${weatherData["name"]}"
+                          : "",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: weatherData == {}
+                              ? Colors.red
+                              : Colors.grey.shade700,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1),
+                    ),
                   ),
                   Expanded(
                     child: Padding(
@@ -88,63 +108,63 @@ class _DashboardState extends State<Dashboard> {
                                 color: Colors.black.withOpacity(0.32),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                              Image.asset(
-                                "assets/images/splash.png",
-                                height: 80,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  weatherData != null
-                                      ? "${weatherData["main"]["temp"]}°C"
-                                      : "N/A",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: weatherData != null
-                                          ? Colors.grey.shade300
-                                          : Colors.red,
-                                      fontSize: 50,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8, right: 8, top: 8),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  width: MediaQuery.of(context).size.width,
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                    const FittedBox(
-                                        child: Text(
-                                      "Feels Like : ",style: TextStyle(fontSize: 18),
-                                    )),
-                                    Text(
-                                      weatherData != null
-                                          ? "${weatherData["main"]["feels_like"]}°C"
+                                  Image.asset(
+                                    "assets/images/splash.png",
+                                    height: 80,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      weatherData.containsKey("main")
+                                          ? "${weatherData["main"]["temp"]}°C"
                                           : "N/A",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: weatherData != null
-                                              ? Colors.grey.shade700
-                                              : Colors.red,
-                                          fontSize: 20,
+                                          color: weatherData == {}
+                                              ? Colors.red
+                                              : Colors.grey.shade300,
+                                          fontSize: 50,
                                           fontWeight: FontWeight.bold,
                                           letterSpacing: 1),
-                                    )
-                                  ]),
-                                ),
-                              ),
-                            ]),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8, top: 8),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(8)),
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const FittedBox(
+                                                child: Text(
+                                                  "Feels Like : ",style: TextStyle(fontSize: 18),
+                                                )),
+                                            Text(
+                                              weatherData.containsKey("main")
+                                                  ? "${weatherData["main"]["feels_like"]}°C"
+                                                  : "N/A",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: weatherData == {}
+                                                      ? Colors.red
+                                                      : Colors.grey.shade700,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  letterSpacing: 1),
+                                            )
+                                          ]),
+                                    ),
+                                  ),
+                                ]),
                           ),
                           const SizedBox(height: 10,),
                           Container(
@@ -153,7 +173,7 @@ class _DashboardState extends State<Dashboard> {
                                 borderRadius: BorderRadius.circular(8)),
                             child: Padding(
                               padding:
-                                  const EdgeInsets.only(left: 8, right: 8, top: 8,bottom: 8),
+                              const EdgeInsets.only(left: 8, right: 8, top: 8,bottom: 8),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
@@ -161,24 +181,24 @@ class _DashboardState extends State<Dashboard> {
                                     elevation: 0,
                                     child: Container(
                                       width:
-                                          MediaQuery.of(context).size.width / 2.5,
+                                      MediaQuery.of(context).size.width / 2.5,
                                       padding: const EdgeInsets.all(10),
                                       child: Row(children: [
                                         const FittedBox(
                                             child: Text(
-                                          "Min Temp : ",
-                                        )),
+                                              "Min Temp : ",
+                                            )),
                                         Expanded(
                                           child: FittedBox(
                                             child: Text(
-                                              weatherData != null
+                                              weatherData.containsKey("main")
                                                   ? "${weatherData["main"]["temp_min"]}°C"
                                                   : "N/A",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  color: weatherData != null
-                                                      ? Colors.blue
-                                                      : Colors.red,
+                                                  color: weatherData == {}
+                                                      ? Colors.red
+                                                      : Colors.grey.shade700,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                   letterSpacing: 1),
@@ -192,24 +212,24 @@ class _DashboardState extends State<Dashboard> {
                                     elevation: 0,
                                     child: Container(
                                       width:
-                                          MediaQuery.of(context).size.width / 2.5,
+                                      MediaQuery.of(context).size.width / 2.5,
                                       padding: const EdgeInsets.all(10),
                                       child: Row(children: [
                                         const FittedBox(
                                             child: Text(
-                                          "Max Temp : ",
-                                        )),
+                                              "Max Temp : ",
+                                            )),
                                         Expanded(
                                           child: FittedBox(
                                             child: Text(
-                                              weatherData != null
+                                              weatherData.containsKey("main")
                                                   ? "${weatherData["main"]["temp_max"]}°C"
                                                   : "N/A",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  color: weatherData != null
-                                                      ? Colors.blue
-                                                      : Colors.red,
+                                                  color: weatherData == {}
+                                                      ? Colors.red
+                                                      : Colors.grey.shade700,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                   letterSpacing: 1),
@@ -240,18 +260,18 @@ class _DashboardState extends State<Dashboard> {
                                       child: Column(children: [
                                         const FittedBox(
                                             child: Text(
-                                          "Pressure : ",
-                                        )),
+                                              "Pressure : ",
+                                            )),
                                         Expanded(
                                           child: Text(
-                                            weatherData != null
+                                            weatherData.containsKey("main")
                                                 ? "${weatherData["main"]["pressure"]} millibars "
                                                 : "N/A",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: weatherData != null
-                                                    ? Colors.blue
-                                                    : Colors.red,
+                                                color: weatherData == {}
+                                                    ? Colors.red
+                                                    : Colors.grey.shade700,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                                 letterSpacing: 1),
@@ -267,18 +287,18 @@ class _DashboardState extends State<Dashboard> {
                                       child: Column(children: [
                                         const FittedBox(
                                             child: Text(
-                                          "Humidity : ",
-                                        )),
+                                              "Humidity : ",
+                                            )),
                                         Expanded(
                                           child: Text(
-                                            weatherData != null
+                                            weatherData.containsKey("main")
                                                 ? "${weatherData["main"]["humidity"]} % "
                                                 : "N/A",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: weatherData != null
-                                                    ? Colors.blue
-                                                    : Colors.red,
+                                                color: weatherData == {}
+                                                    ? Colors.red
+                                                    : Colors.grey.shade700,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                                 letterSpacing: 1),
@@ -298,14 +318,14 @@ class _DashboardState extends State<Dashboard> {
                                             )),
                                         Expanded(
                                           child: Text(
-                                            weatherData != null
+                                            weatherData.containsKey("main")
                                                 ? "${weatherData["wind"]["speed"]} m/sec "
                                                 : "N/A",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: weatherData != null
-                                                    ? Colors.blue
-                                                    : Colors.red,
+                                                color: weatherData == {}
+                                                    ? Colors.red
+                                                    : Colors.grey.shade700,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                                 letterSpacing: 1),
@@ -334,14 +354,14 @@ class _DashboardState extends State<Dashboard> {
                                           "Visibility : ",style: TextStyle(fontSize: 18),
                                         )),
                                     Text(
-                                      weatherData != null
+                                      weatherData.containsKey("visibility")
                                           ? "${weatherData["visibility"]} m"
                                           : "N/A",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          color: weatherData != null
-                                              ? Colors.grey.shade700
-                                              : Colors.red,
+                                          color: weatherData == {}
+                                              ? Colors.red
+                                              : Colors.grey.shade700,
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           letterSpacing: 1),
@@ -375,63 +395,72 @@ class _ChangeCityState extends State<ChangeCity> {
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherBloc, WeatherState>(
         listenWhen: (previous, current) =>
-            previous.authFailureOrSuccessOption !=
+        previous.authFailureOrSuccessOption !=
             current.authFailureOrSuccessOption,
         listener: (context, state) {},
         buildWhen: (previous, current) =>
-            previous.showErrorMessages != current.showErrorMessages,
+        previous.showErrorMessages != current.showErrorMessages,
         builder: (context, state) {
           return SafeArea(
               child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: const EdgeInsets.only(right: 10, left: 10),
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 45,
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.black),
-                        onChanged: (v) {
-                          context
-                              .read<WeatherBloc>()
-                              .add(WeatherEvent.cityNameChanged(v));
-                        },
-                        decoration: InputDecoration(
-                          label: Text(
-                            "Search city",
-                            style: TextStyle(color: Colors.grey.shade700),
-                          ),
-                          hintText: "Search",
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey.shade700,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          border: InputBorder.none,
-                        ),
-                      ),
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ],
-                ),
-              ),
-              ElevatedButton(
-                child: const Text('Get Weather'),
-                onPressed: () {
-                  weatherData = null;
-                  context
-                      .read<WeatherBloc>()
-                      .add(const WeatherEvent.searchOnButtonPress());
-                },
-              ),
-            ],
-          ));
+                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          child: TextFormField(
+                            cursorHeight: 18,
+                            style: const TextStyle(color: Colors.black,fontSize: 18,height: 0),
+                            onChanged: (v) {
+                              context
+                                  .read<WeatherBloc>()
+                                  .add(WeatherEvent.cityNameChanged(v));
+                            },
+                            validator: (_) =>
+                                context.read<WeatherBloc>().state.city.value.fold(
+                                      (f) => f.maybeMap(
+                                    empty: (_) => 'City name cannot be empty.',
+                                    orElse: () => null,
+                                  ),
+                                      (_) => null,
+                                ),
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: InputDecoration(
+                              label: Text(
+                                "Search city",
+                                style: TextStyle(color: Colors.grey.shade700,fontSize: 16),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.grey.shade700,
+                              ),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: const Text('Get Weather'),
+                    onPressed: () {
+                      weatherData = {};
+                      context
+                          .read<WeatherBloc>()
+                          .add(const WeatherEvent.searchOnButtonPress());
+                    },
+                  ),
+                ],
+              ));
         });
   }
 }
