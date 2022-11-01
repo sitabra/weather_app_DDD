@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> {
               data = a.getOrElse(() => const FetchedWeather(data: {}));
               weatherData = data.data;
               if (kDebugMode) {
-                print("here 2          - ${data.data.toString()}");
+                print("Response data:-                 ${data.data.toString()}");
               }
             });
             return Container(
@@ -70,7 +70,10 @@ class _DashboardState extends State<Dashboard> {
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text("Weather App", style: TextStyle(color: Colors.grey.shade900,fontSize: 30),),
+                      child: Text(
+                        "Weather App",
+                        key: const Key('weatherAppTitle'),
+                        style: TextStyle(color: Colors.grey.shade900,fontSize: 30),),
                     ),
                   ),
                   const SizedBox(
@@ -417,6 +420,7 @@ class _ChangeCityState extends State<ChangeCity> {
                         SizedBox(
                           height: 50,
                           child: TextFormField(
+                            key: const Key('cityNameField'),
                             cursorHeight: 18,
                             style: const TextStyle(color: Colors.black,fontSize: 18,height: 0),
                             onChanged: (v) {
@@ -451,6 +455,7 @@ class _ChangeCityState extends State<ChangeCity> {
                     ),
                   ),
                   ElevatedButton(
+                    key: const Key("elevatedButton"),
                     child: const Text('Get Weather'),
                     onPressed: () {
                       weatherData = {};
