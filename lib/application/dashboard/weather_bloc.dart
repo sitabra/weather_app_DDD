@@ -60,7 +60,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           authFailureOrSuccessOption: optionOf(failureOrSuccess),
         ));
       } else {
-        emit(state.copyWith(showErrorMessages: true));
+        emit(state.copyWith(showErrorMessages: true,
+        authFailureOrSuccessOption: optionOf(const Left(ApiFailure.cityNotFound()))));
       }
     }, authCheck: (_AuthCheck value) {  });
   }
