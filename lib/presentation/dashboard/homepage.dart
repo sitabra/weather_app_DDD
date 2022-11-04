@@ -73,7 +73,7 @@ class _DashboardState extends State<Dashboard> {
                       child: Text(
                         "Weather App",
                         key: const Key('weatherAppTitle'),
-                        style: TextStyle(color: Colors.grey.shade900,fontSize: 30),),
+                        style: TextStyle(color: Colors.grey.shade900,fontSize: 30,fontWeight: FontWeight.bold),),
                     ),
                   ),
                   const SizedBox(
@@ -81,7 +81,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const ChangeCity(),
                   const SizedBox(
-                    height: 40,
+                    height: 10,
                   ),
                   Card(
                     child: Text(
@@ -97,6 +97,9 @@ class _DashboardState extends State<Dashboard> {
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Expanded(
                     child: Padding(

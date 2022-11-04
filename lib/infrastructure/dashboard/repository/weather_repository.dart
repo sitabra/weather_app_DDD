@@ -36,6 +36,7 @@ class WeatherRepository implements IDashRepository {
       {required City city}) async {
     final cityNameStr = city.getOrCrash();
     try {
+      print("i am here");
       if (kDebugMode) {
         print("here3          - ${cityNameStr.toString()}");
       }
